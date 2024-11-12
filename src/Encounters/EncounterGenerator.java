@@ -1,11 +1,18 @@
 package Encounters;
+import Enemy.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class EncounterGenerator {
 	private int enemyChance;
 	private int neutralChance;
 	private int friendlyChance;
+	
+	//could change these to be hashmaps storing based on biome? <String(biome name), Enemy(enemies in biome)>
+	private ArrayList<Enemy> enemyEncounters;
+	private ArrayList<Encounter> neutralEncounters;
+	private ArrayList<Encounter> friendlyEncounters;
 	
 	/**
 	 * determines odds of each encounter type
@@ -14,11 +21,18 @@ public class EncounterGenerator {
 	 * @param neutral int determining likelihood of neutral encounter
 	 * @param friendly int determining likelihood of friendly encounter
 	 */
-	public EncounterGenerator(int enemy, int neutral, int friendly)
+	public EncounterGenerator(int enemy, int neutral, int friendly, 
+			ArrayList<Enemy> enemyEncounters, 
+			ArrayList<Encounter> neutralEncounters, 
+			ArrayList<Encounter> friendlyEncounters)
 	{
 		this.enemyChance = enemy;
 		this.neutralChance = neutral;
 		this.friendlyChance = friendly;
+		
+		this.enemyEncounters = enemyEncounters;
+		this.neutralEncounters = neutralEncounters;
+		this.friendlyEncounters = friendlyEncounters;
 	}
 	
 	
