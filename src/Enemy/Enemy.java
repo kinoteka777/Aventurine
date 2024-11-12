@@ -7,14 +7,14 @@ import java.util.Random;
 import Player.Player;
 
 public abstract class Enemy {
-	private int maxHealth;
-	private int currentHealth;
-	private int attack;
-	private int speed;
-	private int defense;
-	private String name;
+	protected int maxHealth;
+	protected int currentHealth;
+	protected int attack;
+	protected int speed;
+	protected int defense;
+	protected String name;
 
-	private ArrayList<Attack> abilities;
+	protected ArrayList<Attack> abilities;
 	
 	public Enemy (int health, int attack, int speed, int defense, String name)
 	{
