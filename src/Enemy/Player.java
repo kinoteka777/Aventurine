@@ -1,10 +1,8 @@
-package Player;
+package Enemy;
 
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import Enemy.*;
 
 public class Player extends Enemy {
 	private HashMap<String, Object> inventory;
@@ -100,4 +98,9 @@ public class Player extends Enemy {
 			System.out.println("Whoops! Something went wrong. Src: Player.attack()");
 		}
 	}
+	
+	public int getLevel() {
+		return level;
+	}
+
 }

@@ -4,9 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Enemy.*;
-import Player.Player;
 
-public abstract class EnemyEncounter {
+public class EnemyEncounter {
 	private ArrayList<Enemy> enemies;
 	private Player player;
 
@@ -27,10 +26,15 @@ public abstract class EnemyEncounter {
 		
 	}
 	
+	/**
+	 * Core functionality of this class. Loops with Player attacking first, then enemy/ies attacking.
+	 * When no enemies are left in list, loop is finished and exp is rewarded
+	 * If player dies during loop, game ends
+	 */
 	public void StartCombatLoop()
 	{
 		int expEarned = 0;
-		while (!player.isDead() || enemies.size() > 0)
+		while (enemies.size() > 0)
 		{
 			System.out.println(player.getName()+"'s turn!");
 			Enemy selectedEnemy = getPlayerAttackChoice();
@@ -54,7 +58,6 @@ public abstract class EnemyEncounter {
 						Thread.sleep(5000);
 						System.exit(0);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -65,6 +68,10 @@ public abstract class EnemyEncounter {
 		player.addExp(expEarned);
 	}
 	
+	/**
+	 * prompts for user input on which enemy to attack
+	 * @return selected Enemy to attack
+	 */
 	private Enemy getPlayerAttackChoice()
 	{
 		Scanner scan = new Scanner(System.in);
