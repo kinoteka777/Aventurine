@@ -23,4 +23,12 @@ public abstract class Attack {
 	{
 		return this.getDamage();
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

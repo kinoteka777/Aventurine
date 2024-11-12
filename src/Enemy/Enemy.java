@@ -41,6 +41,14 @@ public abstract class Enemy {
 		enemy.setCurrentHealth(attack.getDamage());
 	}
 	
+	public ArrayList<Attack> getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(ArrayList<Attack> abilities) {
+		this.abilities = abilities;
+	}
+
 	public String getName() {
 		return name;
 	}
