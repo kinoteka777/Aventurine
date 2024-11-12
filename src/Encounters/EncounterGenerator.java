@@ -2,15 +2,18 @@ package Encounters;
 import Enemy.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class EncounterGenerator {
 	private int enemyChance;
 	private int neutralChance;
 	private int friendlyChance;
+	private Player player;
+	private String currentBiome;
 	
-	//could change these to be hashmaps storing based on biome? <String(biome name), Enemy(enemies in biome)>
-	private ArrayList<Enemy> enemyEncounters;
+	//Maps potential enemies based on biome
+	private HashMap<String, ArrayList<Enemy>> enemyEncounters;
 	//private ArrayList<Encounter> neutralEncounters;
 	//private ArrayList<Encounter> friendlyEncounters;
 	
@@ -21,15 +24,16 @@ public class EncounterGenerator {
 	 * @param neutral int determining likelihood of neutral encounter
 	 * @param friendly int determining likelihood of friendly encounter
 	 */
-	public EncounterGenerator(int enemy, int neutral, int friendly, 
-			ArrayList<Enemy> enemyEncounters) 
+	public EncounterGenerator(int enemy, int neutral, int friendly, String currentBiome, Player player,
+			HashMap<String, ArrayList<Enemy>> enemyEncounters) 
 			//ArrayList<Encounter> neutralEncounters, 
 			//ArrayList<Encounter> friendlyEncounters)
 	{
 		this.enemyChance = enemy;
 		this.neutralChance = neutral;
 		this.friendlyChance = friendly;
-		
+		this.currentBiome = currentBiome;
+		this.player = player;
 		this.enemyEncounters = enemyEncounters;
 		//this.neutralEncounters = neutralEncounters;
 		//this.friendlyEncounters = friendlyEncounters;
@@ -45,7 +49,7 @@ public class EncounterGenerator {
 		return enemyChance + neutralChance + friendlyChance;
 	}
 	
-	public void getEncounterType()
+	public void generateEncounter(int playerLevel)
 	{
 		// generates a random number between 0 and sum of all chance types (enemy + neutral + friendly)
 		Random rand = new Random();
@@ -69,10 +73,24 @@ public class EncounterGenerator {
 		} 
 		else
 		{
-			
+			generateEnemyEncounter();
 		}
 	}
 	
+	private void generateEnemyEncounter()
+	{
+		ArrayList<Enemy> potentialEnemies = enemyEncounters.get(currentBiome);
+		Random rand = new Random();
+		int enemyChoice = rand.nextInt(potentialEnemies.size()-1);
+		Enemy enemy = potentialEnemies.get(enemyChoice);
+		
+		int enemyStrength = enemy.getAttack() * enemy.getCurrentHealth() / 100;
+		int enemyCount = (int) Math.floor(player.getLevel() / enemyStrength);
+		
+		EnemyEncounter encounter = new EnemyEncounter(player, enemy, enemyCount);
+		encounter.StartCombatLoop();
+		
+	}
 	
 	public int getFriendlyChance() {
 		return friendlyChance;
