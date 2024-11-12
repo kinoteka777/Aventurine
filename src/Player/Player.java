@@ -13,7 +13,7 @@ public class Player extends Enemy {
 	private int currentExp;
 	
 	public Player(int health, int attack, int speed, int defense, String name) {
-		super(health, attack, speed, defense, name);
+		super(health, attack, speed, defense, 0, name);
 		this.inventory = new HashMap<String, Object>();
 		this.level = 1;
 		this.nextLevelThreshold = 100;
@@ -36,7 +36,9 @@ public class Player extends Enemy {
 	}
 	
 	/**
-	 * increments level
+	 * increments level and stats
+	 * resets currentExp and increases threshold for next level
+	 * also restores player health to full
 	 */
 	private void levelUp()
 	{
@@ -89,6 +91,7 @@ public class Player extends Enemy {
 			}
 		}
 		scan.close();
+		
 		if (selectedAttack != null)
 		{
 			System.out.println(selectedAttack);

@@ -13,38 +13,56 @@ public abstract class EnemyEncounter {
 	public EnemyEncounter(Player player, Enemy enemy, int numEnemies)
 	{
 		this.player = player;
-		
-		if (enemy.getSpeed() > player.getSpeed())
+		for (int i = 0; i < numEnemies; i++)
 		{
-			for (int i = 0; i < numEnemies; i++)
+			//does not append number if only one enemy present
+			if (numEnemies == 1)
 			{
-				//does not append number if only one enemy present
-				if (numEnemies == 1)
-				{
-					enemies.add(enemy);
-				}
-				//appends number next to enemy name for clarity
-				enemy.setName(enemy.getName()+" "+i);
 				enemies.add(enemy);
 			}
+			//appends number next to enemy name for clarity
+			enemy.setName(enemy.getName()+" "+i);
+			enemies.add(enemy);
 		}
+		
 	}
 	
 	public void StartCombatLoop()
 	{
+		int expEarned = 0;
 		while (!player.isDead() || enemies.size() > 0)
 		{
 			System.out.println(player.getName()+"'s turn!");
 			Enemy selectedEnemy = getPlayerAttackChoice();
 			player.attack(selectedEnemy);
+			if (selectedEnemy.isDead())
+			{
+				System.out.println(selectedEnemy.getName()+" died!");
+				expEarned += selectedEnemy.getExpReward();
+				enemies.remove(selectedEnemy);
+			}
 			
 			for (Enemy enemy : enemies)
 			{
 				System.out.println(enemy.getName()+"'s turn!");
 				enemy.attack(player);
+				//if player dies, terminate program
+				if (player.isDead())
+				{
+					System.out.println("You died! Thanks for participating in the wonderful world of Adventurine!!!");
+					try {
+						Thread.sleep(5000);
+						System.exit(0);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 				System.out.println(player.getName()+" health: "+player.getCurrentHealth());
 			}
 		}
+		System.out.println("[ALL ENEMIES SLAIN]");
+		player.addExp(expEarned);
 	}
 	
 	private Enemy getPlayerAttackChoice()

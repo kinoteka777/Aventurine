@@ -12,11 +12,12 @@ public abstract class Enemy {
 	protected int attack;
 	protected int speed;
 	protected int defense;
+	protected int expReward;
 	protected String name;
 
 	protected ArrayList<Attack> abilities;
 	
-	public Enemy (int health, int attack, int speed, int defense, String name)
+	public Enemy (int health, int attack, int speed, int defense, int expReward, String name)
 	{
 		this.maxHealth = health;
 		this.setCurrentHealth(health);
@@ -24,6 +25,7 @@ public abstract class Enemy {
 		this.speed = speed;
 		this.defense = defense;
 		this.name = name;
+		this.expReward = expReward;
 		this.abilities = new ArrayList<Attack>();
 		
 	}
@@ -110,5 +112,9 @@ public abstract class Enemy {
 	{
 		this.currentHealth -= damage;
 	}
-	
+
+	public int getExpReward() {
+		return expReward;
+	}
+
 }
