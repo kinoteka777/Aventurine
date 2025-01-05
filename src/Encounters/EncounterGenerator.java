@@ -63,14 +63,18 @@ public class EncounterGenerator {
 		 * else if 90 > encounterChance > 70, it will be a neutral encounter
 		 * lower than 70 will result in an enemy encounter. 
 		 */
+		
+		// Passive encounter
 		if (encounterChance > (getEnemyChance() + getNeutralChance()))
 		{
 			
-		} 
+		}
+		// Neutral encounter
 		else if (encounterChance > getEnemyChance())
 		{
 			
 		} 
+		// Enemy Encounter
 		else
 		{
 			generateEnemyEncounter();

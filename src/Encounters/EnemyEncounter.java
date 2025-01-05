@@ -43,6 +43,7 @@ public class EnemyEncounter {
 			{
 				System.out.println(selectedEnemy.getName()+" died!");
 				expEarned += selectedEnemy.getExpReward();
+				player.updateQuests(selectedEnemy.getName());
 				enemies.remove(selectedEnemy);
 			}
 			

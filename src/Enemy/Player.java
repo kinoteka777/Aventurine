@@ -1,11 +1,14 @@
 package Enemy;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import Biomes.*;
 
 public class Player extends Enemy {
 	private HashMap<String, Object> inventory;
+	private ArrayList<Quest> Quests;
 	private int level;
 	private int nextLevelThreshold;
 	private int currentExp;
@@ -101,6 +104,30 @@ public class Player extends Enemy {
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public void updateQuests(String enemyName)
+	{
+		for (Quest quest : this.Quests)
+		{
+			quest.updateQuest(enemyName);
+		}
+	}
+	
+	public void addQuest(Quest quest)
+	{
+		if (this.Quests.size() < 3)
+		{
+			this.Quests.add(quest);
+		} else 
+		{
+			System.out.println("Sorry! You can only hold up to 3 quests at a time.");
+		}
+	}
+	
+	private void removeQuest(Quest quest)
+	{
+		this.Quests.remove(quest);
 	}
 
 }
