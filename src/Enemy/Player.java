@@ -108,9 +108,15 @@ public class Player extends Enemy {
 	
 	public void updateQuests(String enemyName)
 	{
-		for (Quest quest : this.Quests)
+		for (Quest quest : Quests)
 		{
-			quest.updateQuest(enemyName);
+			//checks if any quests have matching monster, and if quest is completed, it is removed from the list.
+			int expReward = quest.updateQuest(enemyName); // retrieves exp reward, 0 if quest not completed.
+			if (expReward > 0) { // if reward is > 0 (quest completed) exp is added and quest is removed from list.
+				this.addExp(expReward);
+				Quests.remove(quest);
+			};
+			
 		}
 	}
 	
